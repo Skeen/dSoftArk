@@ -1,0 +1,20 @@
+Epsilonciv has changed its implementation design more than one time. 
+
+Initially the TDD-process let us to the thoughts: \\
+Where to store the information about the number of battles won of each player?
+
+We had already refactored out just what the game does to decide the winner of a game, into its own method and delegated it into a new strategy, at this point.\\
+
+The first edition stored the data on the Enum Player, so that any interface with access to Framework.Player could actually access the information, but unfortunately also change it.
+
+The second edition stored the state-information in game, and only allowed gameImpl to change it.
+
+The third and current edition moved the responsibility of accessing the information and incrementing the player specific counters into a new interface, BattlesWatcher\footnote{BattlesWatcher is subject to change.} 
+and let the epsilon implementation of the interfaces WinStrategy\footnote{WinStrategy is the interface with responsibility of determining the current game winner and is accesed through Game.getWinner()}
+ and BattleStrategy\footnote{BattleStrategy is the interface with responsibility of determining between 2 tiles with units and the state of the game which unit that is the winner of a possible battle. This is used in Game.moveUnit(), in the case that a unit moves on top of an enemy unit.}
+ be handled by the same object that, consequently, took care of the responsibility of BattlesWatcher.
+\\
+
+As such the design for epsilon was not fully fledged until very late in the TDD process and still the BattleStrategy is not fully implemented for the epsilon variant.
+
+EpsilonBestOf5BattlesWinStrategy\footnote{The Epsilon specific strategy that both handles the responsibility of WinStrategy and BattleStrategy.} is therefore an item on our backlog\footnote{See \nameref{backlog}}.

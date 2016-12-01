@@ -1,0 +1,39 @@
+%  3-1-2 process for one of the variants. For one of them, discuss the use of the 3-1-2 process and the Strategy pattern. 
+
+\subsubsection*{ \raisebox{.5pt}{\textcircled{\raisebox{-.9pt} {3}}} - Identifying behavior that varies}
+
+In betaciv we first encountered a need for a different demand set for winning.
+The new demand set was a need for a single player to own all existing cities. 
+This is a demand set that is likely to change. 
+Fx could another demand be that the players must vote every 4 rounds to possible decide a game winner, and only by majority vote can a winner be found.
+
+
+\subsubsection*{ \raisebox{.5pt}{\textcircled{\raisebox{-.9pt} {1}}} - Stating the responsibility in an interface}
+
+The only place the functionality differs, is in Game.getWinner(), and we rewrite the method like this:
+
+\begin{lstlisting}
+public Player getWinner()
+{
+    return winStrategy.getWinner();
+}
+\end{lstlisting}
+
+Then we need the interface to be like this:
+\begin{lstlisting}
+public interface WinStrategy
+{
+    public Player getWinner();
+}
+\end{lstlisting}
+
+\subsubsection*{ \raisebox{.5pt}{\textcircled{\raisebox{-.9pt} {2}}} - Composing the behavior by delegation}
+
+In the attempt to compose the delegated behavior, we stumble upon a problem.
+The behavior needs to know about part of the state of the game, namely the age, and in the case of the new variant, also the ownership of the cities.
+They are accessible through the method Game.getAge() and Game.getCityAt().getOwner().
+
+We chose to seed the game-state to the interface as a parameter to getWinner().
+The interface looks like this now:
+\lstinputlisting[linerange=5-14]{../../hotciv/src/hotciv/framework/strategy/WinStrategy.java}
+

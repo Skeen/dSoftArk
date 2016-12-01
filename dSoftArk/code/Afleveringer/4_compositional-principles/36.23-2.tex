@@ -1,0 +1,42 @@
+An obvious way to find which method(s) to sketch is by inspecting our
+variability table, to find the method(s) that differ the most, and in our
+implementation there's three winning strategies, so let's sketch that one;
+
+\begin{lstlisting}
+public Player getWinner(String gameType)
+{
+    // If Betaciv
+    if (gameType = GameConstants.BetaCiv)
+    {
+        // Code
+    }
+    // Otherwise if EpsilonCiv
+    else if(gameType = GameConstants.EpsilonCiv)
+    {
+        // Code
+    }
+    // Otherwise if ZetaCiv
+    else if(gameType = GameConstants.ZetaCiv)
+    {
+        // Code
+    }
+    // Otherwise
+    else
+    {
+        // Code
+    }
+}
+\end{lstlisting}
+
+Now all of the 'code' could either be inline, or it could be in functions,
+however both of these alternatives are bad: 
+The inline because it makes it hard to read the code and know which code is
+for what, and because moving it into functions, makes variant specific code
+available to every variant within game.
+
+Another issue is that a change to one of the gameTypes, can possibly affect the
+others, either because of an error, or simply because the change is in some of
+the code that is shared.
+
+Only a single function was sketched here, as other functions would simply be
+alike this one.

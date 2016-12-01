@@ -1,0 +1,85 @@
+﻿Test cases AlphaCiv
+
+World Layout
+v   * city at (1,1)
+v   * Ocean at (1,0)    
+v   * Mountain at (2,2)
+v   * 16 x 16 valid tiles (0,0) to (15,15)
+v   * 16 x 16 tiles (0,0) to (15,15) that returns correct coordinate
+v   * Hills at (0,1)
+v   * "plain" at (1,1)
+
+Other:
+v   * Tile(3,3) is at a position so that the column is 3'rd and the row is
+      3'rd.
+v   * Tile(2,2) is at a position so that the column is 2'rd and the row is
+      2'rd.
+v   * 16 x 16 tiles is "plain" except (1,0),(0,1) and (2,2)
+v   * First turn is Red's Turn
+v   * Blue turn after Red
+v   * Red turn after Blue
+v   * Red wins at year 3000 BC
+v   * Noone should win before the game starts.
+v   * Game age starts at 4000BC
+v   * getTile returns a tile at (0,0)
+v   * Each round advances the game age by 100 years
+v   * Position(4,1) getRow() = 4 and getColumn() = 1
+v   * Ending round advances year by 100.
+
+InitialUnits:
+v   * A unit exist at (3,2)
+v   * Blue unit at (3,2)
+v   * unit Legion at (3,2)
+v   * Unit at (2,0)
+v   * unit Archer at (2,0)
+v   * Red unit at (2,0)
+v   * Red Settler unit at 4,3
+v   * Check that there are no units anywhere, but at these locations ^^
+v   * The settler's action shouldn't do anything
+
+Attacking:
+v   * Red cannot move Blue units
+v   * Blue cannot move Red units
+v   * Red units are allowed to move on top of blue units.
+v   * Red units moved ontop of blue units, should destroy the blue units.
+v   * Blue units moved ontop of red units, should destroy the red units.
+v   * Ensure that red units cannot kill other red units.
+
+Movement:
+v   * moveUnit from 4,3 to 5,3 should be true move
+v   * moveUnit from 4,3 to 5,3 should mean valid unit exist at position 5,3
+v	* Tile 5,3 does not have a unit.
+v   * unit from 3,2 cant move to 2,2 mountain tile
+v   * cant move unit at 2,0 to ocean at 1,0
+v   * once a unit is moved, the moved from tile should be empty
+v   * can move to til Plain, Forest, Hills, City, Units and not to Mountain and
+Ocean
+v   * Unit cannot move over mountain
+v	* Archer, Legion, Settler units have movement of 1 at start of game.
+v   * can only move as many steps as it has moves.
+v   * on new round, the moveability is restored.
+
+Cities:
+v   * Red city at (1,1)
+v   * Blue city at (4,1)
+v   * No city at (2,2)
+v   * City pop is 1
+v   * Should be able to produce archers,
+v   *                           legions,
+v   *                           settlers in city
+v   * Check that cities produce 6 productions per round.
+v   * Check that cities production amount starts at 0.
+
+UnitProduction:
+v   * Check that a unit (Archer) is produced,
+      when a city has selected archer for production and accumulated 10
+      production, and reduces city production treasury.
+v   * Check that a unit (Legion) is produced,
+      when a city has selected Legion for production and accumulated 15
+      production, and reduces city production treasury.
+v   * Check that a unit (Settler) is produced,
+      when a city has selected Settler for production and accumulated 30
+      production, and reduces city production treasury.
+v   * Check that when a unit is produced, and the city tile is taken, it (the
+      newly spawned unit) is placed on the first non-occipied adjacent tile,
+      starting from the one just north, moving clockwise.

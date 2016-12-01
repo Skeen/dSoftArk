@@ -1,0 +1,14 @@
+Implementation of the semiciv variant is, like we mentioned earlier, actually
+very simple, as it's just a matter of implementing two classes. 
+The first one, the strategy factory, is simply a matter of copy/pasting from the different
+other strategy factories, such that our semiciv factory returns the correct
+strategies for everything.
+ However since we do not have a unitfactory, that only modifies the settler,
+ we'll have to write a new unitfactory.
+
+The development of the unitfactory is also really simple, as it's just a matter
+of copying the gammaunitfactory, and deleting a few lines of code (those that
+are within the Archer if statement). 
+This is possible because unit's within our
+unit factories are handled without affecting eachother.
+

@@ -1,0 +1,133 @@
+How to read this file:
+Lines prepended with >> and appended with << describes the focus
+of the TDD iteration.  Other lines are numbered depending on
+which step in the TDD is occuring.
+These are the steps:
+    1. new test. Each TDD iteration starts with testing
+    2. the test fails and why.
+    3. The action taken in the attempt to make the test succeed.
+       This step may mention principles used to add to the code.
+       This step is followed by either 2 or 4.
+    4. The test succeds. This step may describe the circumstances.
+    5. Refactor. Not all iterations utilises this step, because
+       it is not allways obvious what to refactor.
+
+
+Our TDD iterations:
+
+>> blueCitiesShouldBeCaptureable <<
+1. Let red attack a blue city, and ensure that the city is now
+   red.
+2. Fails, because no city attack code is in place.
+3. Added city attack handling code to moveUnit() function
+4. Succes
+
+>> redCitiesShouldBeCaptureable <<
+1. Let blue attack a red city, and ensure that the city is now
+   blue.
+2. Fails, because no city attack code is in place.
+3. Added city attack handling code to moveUnit() function
+4. Succes
+
+>> RedPlayerShouldWinWhenConqouringAllCities <<
+1. Let red take all cities, and check that red has won.
+2. Fails, because red hasn't won (still using alphaciv stategy
+   (with time)).  3. Fake-it by adding a simple strategy such
+   that red always wins!
+   (ConquerWin.class)
+4. Succes?
+5. Notice duplicate code in tests, between this test and
+   'citiesShouldBeCaptureable', this is refactored out, such that
+   a few helper functions are made.
+6. Succes
+
+>> BluePlayerShouldWinWhenConqouringAllCities <<
+1. Let blue take all cities, and check that blue has won.
+2. Fails, because red always wins, with current strategy!
+3. Made winning, depend on who owns all the cities. If a single
+   player owns all cities that player is the winner, otherwise noone
+   has won yet.
+4. Succes, on all tests!
+5. Notice duplicate code, between this and
+   'RedPlayerShouldWinWhenConqouringAllCities', this has been
+   refactored out, such that helper functions take care of common
+   stuff.
+
+>> refactoring (sverre) <<
+5. Removed requirement of Age as parameter to winner in interface
+   WinStrategy.
+   Instead made WinStrategy.RedWinAt3000 require an AgeStrategy
+   at construction.
+   Should maybe be changed to require proper GameSeed instead.
+   (like WinStrategy.ConquerWin)
+5. Rename WorldAge100Round to Age100PrRound
+7. Added TODO's
+5. Made the local Game field in ConquerWin be a GameExt field.
+6. Succes
+
+>> skeen is back <<
+5. Changed back game to type Game instead of GameExt in
+   ConquerWin, we don't need the big interface to determine whos
+   won, therefore it should make use of the read only interface!
+6. Succes
+5. Changed the WinStrategy to add a seedGame() function, such
+   that WinStrategy has access to all of game's readonly.
+6. Succes
+
+>> theFirst3900YearsShouldBeAt100YearsPerRound() <<
+1. Write a test, that checks if years increment by 100 for the
+   first 3900 years
+   (-4000 -> -100).
+2. Succes (Alpaciv always increases with 100).
+
+>> theBirthOfCristSequence() <<
+1. Write a test, that checks if years increase alike; -100 >> -1
+   >> +1 >> +50
+2. Fails, because Alphaciv always increases with 100).
+3. Changed to add a BetaAge stategy, alike alphaciv below -100,
+   special cases above.
+4. Succes
+
+>> the50To1750ShouldIncrementWith50YearsPerRound <<
+1. Write a test, that checks if years increment by 50 for the
+   1700 years between 50AD --> 1750AD.
+2. Fails (internal loop inside a testhelper, because an
+   precondition was broken).
+3. Change the AgingStrategy such that if 'age > 50', then
+   increment it by 50 each time.
+4. Succes
+
+>> the1750To1900ShouldIncrementWith25YearsPerRound <<
+1. Write a test, that checks if years increment by 25 for the 150
+   years between 1750AD --> 1900AD.
+2. Fails (because we're currently incrementing by 50 years/round).
+3. Add a condition to the 50years/round, such that this scheme is
+   only used when age >= 50 and age < 1750
+4. Fails (internal loop inside a testhelper, because an
+   precondition was broken).
+3. Add code that increase age by 25 years/round.
+4. Succes
+
+>> the1900To1970ShouldIncrementWith5YearsPerRound <<
+1. Write a test, that checks if years increment by 5 for the 70
+   years between 1900AD --> 1970AD.
+2. Fails (because we're currently incrementing by 25
+   years/round).
+3. Add a condition to the 25years/round, such that this scheme is
+   only used when age >= 1750 and age < 1900, and add code such
+   that otherwise increments are 5years/round.
+4. Succes
+
+>> the1970AndAboveShouldIncrementWith1YearsPerRound <<
+1. Write a test, that checks if years increment by 1 for the
+   years above 1970AD.
+2. Fails (because we're currently incrementing by 5 years/round).
+3. Add a condition to the 5years/round, such that this scheme is
+   only used when age >= 1900 and age < 1970, and add code such
+   that otherwise increments are 1years/round.
+4. Succes
+
+>> BETACIV IS DONE <<
+That's all for betaciv, all tests run as expected, and all
+features are implemented, betaciv is ready for inclusion into the
+main branch.

@@ -1,0 +1,15 @@
+﻿Test cases GammaCiv
+
+UnitActions:
+v   * Unit actions can only be done by the player owning the unit.
+
+Settler:
+v   * The settler's action removes the settler
+v   * The settler's action adds a city at settler's position
+v   * The settler's action adds a city at settler's position of same owner as the settler was
+
+Archer:
+v   * The archer's action (fortify) doubles the archers defensive strength.
+v   * The archer cannot be moved when it's action is active (toggleable).
+v   * The archer's action can be toggled off, by using action again, and once
+done, it's defensive strength is returned to the original.

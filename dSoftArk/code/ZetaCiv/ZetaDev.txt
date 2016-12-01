@@ -1,0 +1,25 @@
+--------------
+-Rasmus works-
+--------------
+>> red should win when red owns all cities in the game. (prior to turn 20)
+
+1 Making a test that takes the deltaworld and takes over the blue city.
+2 Saw it fail.
+3 Zeta win strategy always returns red player
+4 Success!
+5 ...
+
+>> Blue should win when blue owns all cities. (prior to turn 20)
+1 Make a test for blue winning after taking red city in default world
+2 Saw it fail, as ConquestWin always returns red.
+3 Let Conquest win return a player if that player owns all cities, works by checking if all cities have the same owner.
+4 Success!
+5 ...
+
+>> Red player should win after 20 rounds and 3 attack moves thereafter.
+>> regardless of cities ownership
+1 Make a test that ends 20 rounds, red attacks 3 times and checks if red is the winner
+2 Make a shitton of changes
+3
+4
+5

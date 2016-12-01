@@ -1,0 +1,29 @@
+EtaCiv
+
+* City workforce focus.
+    The player can establish either a production focus or food focus in a city.
+    
+    If the balance is on production then production counts above 1 are
+    distrubuted so the population works on adjacent tiles that produce the most
+    production resources. 
+        Example:
+            If the 8 adjacent tiles for a city are 5 plains, 2mountains,
+            and one forest, then a size 4 city will let people work on
+            the city tile (mandatory), on the forest, and the two mountains
+            (totalling 4 tiles) as this is the configuration that will produce
+            the most production resources.
+            
+    If the balance is on food, then the population is of course distributed to
+    maximize food gathering. 
+        Example:
+            The same city as above would distribute the remaining three populations
+            on the plains to maximize food generation.
+   
+* City population.
+    Population size in the city increases by one once the total collected food
+    in the city exceeds 5+(city size)*3.
+        Example:
+            That is a city of size 4 will go to size 5 once the total food in
+            the city exceeds 17. 
+    When the city population increases, the food total is reset to 0. 
+    Cities cannot exceed size 9.

@@ -1,0 +1,14 @@
+BetaCiv
+
+* First player to conqour all cities wins.
+Completed, using the strategy pattern (WinStrategy).
+
+* World Aging, implement aging as specified in book.
+
+	4000 BC -> 100  BC = 100 year/round
+	"Around the birth of Christ" Sequene -100, -1,  +1, +50
+	50   AD -> 1750 AD = 50  year/round
+	1750 AD -> 1900 AD = 25  year/round
+	1900 AD -> 1970 AD = 5   year/round
+    1970++             = 1   year/round
+Completed, using the strategy pattern (AgeStrategy).

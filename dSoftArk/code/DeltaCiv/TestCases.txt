@@ -1,0 +1,5 @@
+﻿Test cases deltaciv
+
+Varied world layouts 
+v   * Red city at (8,12)
+v   * Blue city at (4,5)

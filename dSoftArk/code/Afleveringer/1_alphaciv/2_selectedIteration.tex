@@ -1,0 +1,47 @@
+As we follow the TDD approach,
+we have kept an allways up-to-date log of our work, specifying which steps in the TDD iteration process we have processed and are currently at,
+together with relevant focus-areas.
+
+
+\subsection*{TDD Rythm and Principles}
+This section includes excerpts from our development log. The numbers to the left specifies the line numbers in our log.
+
+The number in the file in the range of [0,5] specifies the step in the TDD iteration\footnote{See [FRS] on TDD Rhythm}.
+A step 6 is implicit in all iterations. It means that the refactorizations in step 5 is tested and do not introduce errors.
+
+% >> Archer type unit at 2.0
+\logInput{204}{218}
+
+This is an interesting iteration because it shows a deviation from the (TDD) Rhytm:
+
+We do not succesfully implement some changes in our step 3 to be able to proceed to step 4.
+
+Yet failing the test is also a step in the Rhythm, and we just proceed as if we are at the correct step 2 (line 209).
+
+This is an example supporting the fact that the Rhythm always points to a next step, no matter the status of a Green Bar, and as such gives us progression and as a rule our overall process will allways evolve constructively when we use the Rhythm.
+
+The iteration is also interesting, because until this iteration, we hadn't found much use of step 5, refactorization.
+
+Of course refactorization requires enough 'fake it' or duplicate code, to be relevant and these only comes after some progression in the code, i.e. after some simple iterations. \\
+
+The iteration is a followup of earlier iterations, where other units is expected found at other initial placements, (and we faked it earlier, so we didn't implement a full solution).
+So this is the step were a triangulation forces us to not only fake it, but rewrite code, to accept a more abstract situation.
+In this triangulation, we introduced variant handling with a simple parameterized solution.
+This is implemented as the most conservative way of adding a layer of abstraction to the code to pass the test.
+And as such we follow the Triangulation Principle. \\
+
+
+
+
+% >> assert that, a red unit, that moves ontop of a blue unit, kills it <<
+\logInput{312}{325}
+This is also an interesting iteration.
+
+This iteration is an example of the confidence the TDD approach has given us:
+We trusted our tests so we weren't afraid to make changes and refactor our code.
+We'll mention this later in the section about benefits.
+
+
+
+
+%\subsection*{Refactoring Process}

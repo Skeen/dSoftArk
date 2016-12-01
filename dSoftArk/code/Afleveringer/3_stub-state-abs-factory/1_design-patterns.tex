@@ -1,0 +1,17 @@
+In the current state of the project we have used these design patterns consciously:
+
+\begin{description}
+\item [Strategy] used in various variant handlings. 
+\item [Abstract Factory]
+            used to bash specify strategies to gameImpl.
+\item [State]
+        fx WinStrategy: it changes behavior based on the state of Game.\footnote{Thought: However this might not be a state pattern, because it just use simple primitive types for the behavioral change, and not a switch of an object reference.} \\
+Other examples:
+        \begin{itemize} \itemsep1pt \parskip0pt \parsep0pt
+        \item zetaciv.CompositWin: All relevant state information is kept in this object and it changes behavior based on the age-variable.
+        \item EpsilonBestOf5BattlesWinStrategy: almost the same. It is the getWinner method that changes behavior based on state, that is the number of battles each player has won.
+        \end{itemize}
+\item [Decorator]
+    Used as a way to implement a test stub for epsilon units instead of inheritance or a parameterized method.
+\end{description}
+

@@ -1,0 +1,1 @@
+lua C:/Path/ant.lua %* &

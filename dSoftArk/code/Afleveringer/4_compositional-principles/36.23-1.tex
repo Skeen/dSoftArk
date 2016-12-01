@@ -1,0 +1,13 @@
+The design, where all the variant specific code is within the class Game, results in a
+largely unanalyzable code, as you always have to check which if statement is
+for what. 
+This is simply because all kind of specific code is within general code, and
+one will always have to keep track of which code is specific and which code is
+generic.
+
+Also there's the issue that the game will have a larger set of
+responsabilities, as it has to handle all of the variants.
+
+And obviously there's the worst issue: that each change to variant code is
+actually a change within the generic codebase, and it could possibly introduce
+a defect wihtin the generic code. 

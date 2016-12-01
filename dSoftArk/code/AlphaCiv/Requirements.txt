@@ -1,0 +1,68 @@
+    *   Players.
+            There are exaclty two players, Red and Blue.
+Completed, as only these two players are ever returned by getPlayerInTurn()
+
+    *   World Layout.
+            The world looks exactly like shown in Figure 36.2. That is
+            the layout of the terrain is fixed in every game, all tiles
+            are of type "plains" except for tile(1,0)=Ocean, tile(0,1)=Hills,
+            tile(2,2)=Mountains.
+Completed, there's now a Tile array, that holds all tiles of the game.
+    
+    *   Units.
+            (1) Only one unit is allowed on a tile at any time. (2) Red has initially one archer
+             at (2,0), Blue has one legion at (3,2), and Red a settler at (4,3)
+(1) Completed, is ensured as an invariant, such that the system is set up in a way, that it
+isn't violated, and it never may be violated.
+(2) Completed, there's an array holding units, which is populated in the
+constructor.
+
+    *   Attacking.
+            Attacks are resolved like this: The attacking unit always
+            wins no matter what defensive or attacking strength are of either units.
+Completed, units now kill each other as expected, simply by removing the unit
+already in the location, and replacing it with oneself. Also teamkilling is
+disabled.
+
+    *   Unit actions.
+            No associated actions are supported by any unit.
+            Specifically, the settler's action does nothing.
+(1) Completed, no actions are implemented, therefore settler's action are not
+implemented.
+
+    *   Cities.
+            (1) The player may select to produce either archers, legion, or
+            settlers. (2) Cities do not grow but stay at populations size 1.
+            (3) Cities produce 6 productions per round which is a fixed setup.
+            (4) Red has a city at position (1,1) while blue has one at position(4,1).
+(1) Completed, with an extension to the interface, of City.
+(2) Completed, as getSize() on City always returns 1.
+(3) Completed, with a call each round from game.
+(4) Completed, there's an array holding cities, which is populated in the
+constructor.
+
+    *   Unit Production.
+            (1) When a city has accumulated enough production it produces the unit
+            selected for production, and (2) the unit's cost is deducted from the
+            city's treasury of production. (3) The unit is placed on the city tile
+            if no other unit is present, (4) otherwise it is placed on the first
+            non-occipied adjacent tile, starting from the tile just north of the
+            city and moving clockwise.
+(1) Completed, units are produced as one would expect.
+(2) Completed, units cost are being removed from the treasury. ARCHERS and
+    LEGIONS at 6, and SETTLERS at 20.
+(3) Completed, units are placed on the city by default.
+(4) Completed, implemented using a segmentation algorithm.
+
+    *   Aging.
+            (1) The game starts at age 4000BC, and (2) each round advances the game age
+            by 100 years.
+(1) Completed, the age is saved in a variable inside of game, which is initially set
+to -4000 during construction.
+(2) Completed, each second call to endOfTurn() increases the game age variable by 100,
+each second turn, as a round is defined as when every player has had a turn.
+
+    *   Winning.
+            Red wins in year 3000BC.
+Completed, the code simply checks if the world is younger than 3000BC (included)
+and if that's the case it returns Player.RED, otherwise null.

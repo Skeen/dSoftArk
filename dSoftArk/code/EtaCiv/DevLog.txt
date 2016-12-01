@@ -1,0 +1,143 @@
+How to read this file:
+Lines prepended with >> and appended with << describes the focus
+of the TDD iteration.  Other lines are numbered depending on
+which step in the TDD is occuring.
+These are the steps:
+    1. new test. Each TDD iteration starts with testing
+    2. the test fails and why.
+    3. The action taken in the attempt to make the test succeed.
+       This step may mention principles used to add to the code.
+       This step is followed by either 2 or 4.
+    4. The test succeds. This step may describe the circumstances.
+    5. Refactor. Not all iterations utilises this step, because
+       it is not allways obvious what to refactor.
+
+
+Our TDD iterations:
+
+>> playersShouldBeAbleToSetProductionFocus <<
+1. Assert that; a city can set it's production focus, and assert that it is
+actually set, that is, it's newly set value is readable from the interface.
+2. Fails, because the return workforce focus function, returns null.
+3. Fake-it, such that it returns GameConstants.productionFocus
+4. Fails, because the return of workforce focus, doesn't match
+GameConstants.foodFocus, after a setWorkforceFocus call, with this as argument.
+3. Change such that a workforce focus string is stored within the city, changed
+by set, and returned by get.
+4. Succes!
+5. Testcase refactored, to remove duplication
+
+>> refactor <<
+An error was made, such that all of the implemenation from above, was coding
+within common, that is the shared folder, and should as such have influenced all
+civs, which is not intended, therefore there has been a refactoring process,
+which implmented a CityFactory, that alike the UnitFactory produces Cities, and
+this factory has then been implemented in two types, default (what all civs
+usually use) and EtaCityFactory, that changes the cities behavier to that wanted
+specifically in etaciv. - This required development of a CityFactory interface,
+as well as some chages to world initialization, such that it uses the
+CityFactory. It also required a strategy pattern to be implemented within the
+CityImpl class, such that the behavier of the functions in question are
+controlled by this pattern, and the factories simplty provide a spawnCity
+interface, that takes just an owner, and automatically provide the expected
+focusStrategy.
+
+>> citiesShouldProduceAtTheEndOfARound <<
+1. Assert that; the cities production amount actually changes, when a round has
+elapsed.
+2. Succes, they already change, on inspection it appears that cities get 6
+production per round, statically. - Exactly as stated it should by Alphaciv.
+
+>> citiesShouldAlwaysMaximizeProduction <<
+1. Assert that; a city is always producing the maximum amount of production
+possible.
+2. Fails, because it's statically increasing by 6, instead of dynamically based
+upon the tiles around the city.
+3. Implement a strategy, that enabled us to have multiple methods of calucating
+the amount of production a city produces, and start by implementing a defaultciv
+version, such that all tests pass, before working on with the etaciv specific
+one.
+4. Fails, (all old testcases succed, but our new on still fails), because we're
+using defaultciv's production scheme (6 per round).
+3. Fake-it, by simply returning 4 whenever.
+4. Succes?
+5. No refactoring needed.
+
+>> citiesShouldAlwaysMaximizeFood <<
+1. Assert that; a city is always producing the maximum amount of food
+possible.
+2. Fails, because it's statically increasing by 4, instead of dynamically based
+upon the tiles around the city.
+3. Fake-it, by returning 4 when focus is on production, and 10 otherwise.
+4. Succes?
+5. Refactor the two last testcases, to put common functionality into helpers.
+
+>> refactor to remove fake-it code <<
+This could actually be triangulated into place using more tests, but that would
+require us to start messing around with the blue city, or working on another
+world, instead we'll just refactor the code to be correct, as it is somewhat
+obvious implementation, and we'll use our tests to confirm that it does actually
+work.
+We start off by implementing a generic strategy based class, that finds all
+adjecent tiles to the city, and then depending on the city forceforce, asks a
+concrete strategy to calculate the maximal amount of production/food that can be
+produced using those tiles, based upon the number of free workers (city size -
+1), since there's always a single worker at the city itself, which is added
+after taking care of the adjacent tiles.
+To support the strategy that determins the amount of food/production the
+adjacent tiles can accumulate, a helper is written, that loops all the free
+people, and all the tiles for each of them, to find the best tile avaiable for
+that worker, once it's found (using the strategy), it is removed from the list
+of available tiles, and the amount of production, is added to the counter.
+This leaves us with only two well defined tasks for our strategy; 1. determine
+between two tiles, which tile is the best, and 2. determine the value of each
+tile. - As the implementation of the first one, can be based upon the second
+one, and because the second one, can easily be tested, using a lookup table, an
+abstract class that does this is implemented, which makes use of a
+getLookupTable() function that has to be implemented by subclasses, two
+subclasses are then made, such that one can calculate for food as well as
+production.
+6. Running all tests results in a 'green bar'.
+Even though we did not use a test to produce this, we are fairly convinced that
+it works, simply because our tests shows so. - One could argue that a massive
+step was taken, in order to refactor the code, however when one thinks about the
+way it was done (just providing the compiler with whatever it needs), it is
+actually broken into a bunch of small iterations. - Which could possibly have
+been descriped, but which is left out, as they don't add any value.
+
+>> refactor such that alphaciv can't change city size alike how etaciv does it <<
+Again an error was made, such that the etaciv behavier was implemented inside
+the commonciv, even tho it was just a minor change, and every test passed, it
+would allow alphaciv to do break it's specification, which isn't wanted.
+Therefore a strategy (CitySizeStrategy) was implemented, and the defaultciv
+version was then programmed, such that all tests, expect etaciv would succed.
+Then the etaciv version was written, and all tests passed.
+
+>> citiesShouldIncrease1InSizeWhenEnoughFoodIsAccumulated <<
+1. Assert that; a city increases in size, when 5+((city size)*3) food is
+accumulated.
+2. Fails, cities doesn't grow in size currently.
+3. Change; add a strategy, such that different resource usage can be put into a
+compositional design, and start by making defaultciv work alike this.
+4. Succes (etaciv still fails).
+3. Implement a etaciv strategy.
+4. Succes
+
+>> citiesShouldResetFoodAfterIncreaseInSize <<
+1. Assert that; a city has no food, after an increases in size.
+2. Fails, cities don't loose any food, as of the strategy currently implemented for
+etaciv.
+3. Change; Make the etaciv strategy remove all food from the city, once size is
+incremented.
+4. Succes
+
+>> citiesShouldNeverExceedASizeOf9 <<
+1. Assert; that a city can never exceed size 9.
+2. Fails, the code get's a null pointer expection, on code expection, it's
+obvious this is because the city size is 10, therefore this isn't something that
+should change, instead the city size should be limited elsewhere.
+3. Changed, such that cities cannot increase above 9 in size.
+4. Succes.
+5. Refactored code such that the correct handler is called, based upon the city
+production (unit production code, should not be run, when we're producing food)
+- This could be checked with a testcase, but this is left out.

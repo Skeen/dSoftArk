@@ -1,0 +1,47 @@
+How to read this file:
+Lines prepended with >> and appended with << describes the focus of the TDD
+iteration.  Other lines are numbered depending on which step in the TDD is
+occuring.
+These are the steps:
+    1. new test. Each TDD iteration starts with testing
+    2. the test fails and why.
+    3. The action taken in the attempt to make the test succeed. This step may
+mention principles used to add to the code. This step is followed by either 2
+or 4.
+    4. The test succeds. This step may describe the circumstances.
+    5. Refactor. Not all iterations utilises this step, because it is not
+allways obvious what to refactor.
+
+
+Our TDD iterations:
+
+>> RedCityAt(8,12) <<
+1. test that a city returned from the position(8,12) is not null.
+   And that the city is owned by player.Red.
+24. Succes, because ant is not setup for testing deltaciv
+23. Editing build.xml to include TestDeltaciv
+2. Correct Failure (build.xml works)
+3. Pulling createMap into interface WorldGenStrategy
+2. ALL TESTS FAIL !!!!!!!!!!!!!!!!!!!!!!
+3. Make an implementation of the WorldGenStrategy: AlphaWorld (under
+variants.alphaciv.
+   Make GameImpl initialise with AlphaWorld.
+   Changed implementation to not use functions: getTileAt();
+   Changed createMap to return tiles.
+2. Failure 1 test (the expected failure)
+3. Modify the constructor to require a new parameter: WorldGenStrategy
+   Also changed The BetaTest and AlphaTest.
+2. Failure 1 test (expected)
+3. Implemented variants.deltaciv.DeltaWorld
+    to build a world with only PLAINS.
+   Moved placeUnits and placeCity to the WorldGenStrategy.AlphaWorld. wrote a
+   method lige getTileAt as a helper fct.
+2. One tests failed (expected)
+3. Implemented cities placement in WorldGenStrategy.DeltaWorld.
+4. Succes.
+
+>> Should be Blue City at (4,5) <<
+1. wrote test case like the one just before.
+2. failure.
+3. add a city to the given tile in DeltaWorld.
+4. succes.

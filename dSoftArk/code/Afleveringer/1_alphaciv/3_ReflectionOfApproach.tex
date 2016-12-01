@@ -1,0 +1,52 @@
+After having used TDD for a while, we've noticed some positive, as well as some
+negative effects of it (mostly due to incorrect use); here are the main ones.
+
+To start of with the negative; \\
+We found that we were spending a lot of time writing very trivial functions
+and tests,
+functions that we could have implemented in a matter of seconds,
+if we didn't have to follow the TDD approach, with code triangluation\footnote{Looking back, it is obvious that most of these functions could have been implemented as stated in the 'Obvious Implementation' approach, which would greatly have reduced the amount of time spend}, logging and such.
+
+We also found that 'fake-it' code could sometime cause weird behavior in the
+system.
+For instance, when we were implementing the unit movement something was
+clearly wrong, as the unit became immovable after moving it just once.
+After some time debugging, we located the issue to some left-over fake-it code in
+the unit class (unit-owner was being determined by some position dependent
+fake-it code, such that ownership would change as the unit was moved).\footnote{Obviously that fake-it code should have been triangulated out long ago,
+and this is not a flaw in the design technique, more a flaw in the usage of it.} \\
+
+Then to the positive: \\
+We found that we never really lost focus, simply because we only had to
+think about and implement minor features at any one time. 
+This effectively ensured that we never got into 'deep water'.
+ 
+We also found that developing using the TDD approach, helped us work more iterative,
+as the test list always told us what to do next.
+And because the testlist always provided us with small features to implement. 
+
+This stands in contrast to what we used to do, which was a more linear system implementation, where no functional version would be ready until the entire system was done.
+
+We also found that working with these small work units, one wasn't sad about
+throwing away some code away (Do Over Principle), because it was usually only about a few minutes of work instead of hours of work.
+
+However, during the refactoring we saw the greatest effect of
+the TTD approach.
+We were not actually afraid of breaking anything, as one usually would be.
+Where we might usually state 'it works, don't touch it', we actually dared to change the working code, to make it prettier.
+Fx after implementing an ugly solution for the unitplacement problem (place units clockwise around cities), we actually dared to write a prettier (and better) algorithm,
+without fearing that it might introduce some bugs,
+simply because we trusted that our testcases would reveal any flaws in the new algorithm.\\
+
+To summarize:
+ 
+We found that that the TDD approach, made it easier to write code, as iterations
+got a lot shorter, simply because we went from a linear approach to a more
+iterative approach.
+ 
+We found that we were producing better code, mostly because we dared to
+actually refactor old code, without the fear of breaking something.
+ 
+We found that we weren't sad about throwing away code as we used to be, because
+iterations were shorter, the amount of code that had to be throw out was smaller
+as well. \\

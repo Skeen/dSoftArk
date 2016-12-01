@@ -1,0 +1,14 @@
+﻿Test cases EtaCiv
+
+City workforce focus:
+v   * Players can set production focus or food focus in a city.
+v   * A city should produce their production focus at the end of each turn.
+v   * If a city is focusing on production, it's always maximizes production.
+v   * If a city is focusing on foods, it's always maximizing production.
+   
+City population:
+v   * If a city is focusing on food, and gets 5+((city size)*3) it will 
+        increase in size by 1.
+v   * When a city increases in size, it's food total is reset to 0.
+v   * Cities can never exceed a size of 9.
+

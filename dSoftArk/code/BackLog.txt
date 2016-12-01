@@ -1,0 +1,11 @@
+*epsilonciv, Mangler stadig resolveBattleStrategy.
+*handin.
+*Change returntype of resolveBattleWinner to be boolean and the
+ parameters to be non modifiables.
+*Refactor zetaCiv.compositWin to either:
+  -Just extend DefaultAgeStrategy and
+   EpsilonBestOf5BattlesWinStrategy
+  -Hold local Strategy object, and parse the fct. calls to the
+   objects.
+*Delete BattlesWatcher interface. Or specify exactly why it has
+ valid responsibilities.

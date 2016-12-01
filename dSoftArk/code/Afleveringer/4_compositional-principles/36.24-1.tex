@@ -1,0 +1,10 @@
+In a programming language that supports multiple inheritance alike C++ or
+Eiffel, one could implement SemiCiv simply by doing alike what we did, but
+instead of just loading the default behavior, one could also load the specific
+behavior of some functions by deciding which super class' function to
+call.
+
+For instance, in semiciv, we could simply extend all of the variants that we
+make use of, and then override them, with calls to the specific super.
+Fx for the winning strategy, we could simply call the
+betasuper.getWinningStrategy().

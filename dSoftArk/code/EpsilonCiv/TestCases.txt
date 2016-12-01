@@ -1,0 +1,31 @@
+﻿Test cases EpsilonCiv
+
+Winner:
+v   * No winner just after game construction
+v   * getWinner returns null, when an attack has not run
+v   * getWinner returns null, when an attack has not run 3 times
+v   * When RedPlayer has won, either redplayer is the winner or null winner
+v   * When BluePlayer has won, either Blueplayer is the winner or null winner
+v   * when either attacker has won 3 times, there is a winner (not null)
+    * Test all these with a variety of battles happening. (See Attacking:)
+v   * Test that the getWinner changes from null to the correct player
+      when there has happened between 3 and 5 battles. 
+
+Attacking:
+v   * Test RED unit exist at (5,5)
+v   * Test BLUE unit exist at (5,6)
+v   * Test unit at (5,5) has attack strength 10 and defensivestrength 10
+v   * Test unit at (5,6) has attack strength 10 and defensivestrength 10
+v   * Test outcome of battle between (5,5) and (5,6) does not decide gameWinner
+v   * Test outcome of battle between (5,5) and (5,6) 
+                         and between (6,5) and (6,6) does not decide gameWinner
+v   * Test that a battle between 2 units resolves the (from the algorithm)
+      expected winner. That is A strengths 40 against a strengths 20 should win.
+    * ...TestMore
+
+Test book example included with numbers:
+v   * legion with att strength 18 in city with 2 adjacent friend.
+v   * legion with att strength 15 in city with 1 adjacent friend.
+    * legion with right att strength on other tile than city. 
+    * archer with def strength 8 on hill with 1 adjacent friend.
+

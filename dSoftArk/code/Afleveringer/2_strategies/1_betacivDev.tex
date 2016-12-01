@@ -1,0 +1,37 @@
+\begin{comment}
+A short outline of the TDD refactoring iteration that refactors your AlphaCiv variant into a design that will support the BetaCiv requirement (not the actual BetaCiv feature adding iteration!) }
+\end{comment}
+
+\begin{comment}
+Thise are some exerpts from our devlog describing refactoring steps from our development on our:
+
+
+\logInputfile{39}{42}{../../BetaCiv/Devlog.txt}
+\logInputfile{51}{76}{../../BetaCiv/Devlog.txt}
+
+So we basically just implemented the betaciv getWinner() in a strategy pattern, and, because the implementing strategy required knowledge about the the age of game, we let the strategy require a parameter specifying the age.
+
+% iterationen for nogle af de test i de andre iterationer, 
+
+% 12345 punkterne for de nye test,
+
+\end{comment}
+
+This weeks TDD iteration includes a lot of refactoring and variability handling.
+
+Last week we earned confidence in our coding capability and this have allowed us to more radically restructure our code and more efficiently introduce strategy pattern as a solution to variability handling.
+
+To get ready to the new weeks work we did some small stuff, like:
+\begin{enumerate} \itemsep1pt \parskip0pt \parsep0pt
+\item Forking the repository AlphaCiv branch into a Multiciv branch and closing the AlphaCiv branch
+\item Renaming the source directory from standard to common
+\item Setup new folder: hotciv.variants.alphaciv, with the testcase, TestAlphaCiv, in.
+\item Adding new testcase, TestBetaCiv, in a new folder: hotciv.variants.betaciv.
+\item Editing build.xml as necessary.
+\end{enumerate}
+
+The editing of build.xml allowed us to start writing testcases for betaciv and every time we ran Ant on our source, Ant would show os status on both betaciv and alphaciv.
+
+Our refactoring on the common source (from the development on AlphaCiv) included changes to the constructor in GameImpl to accept paremeters that is used to specify how to execute getWinner(). 
+The existing code in getWinner where moved to the parameter object and thus called via that object.
+

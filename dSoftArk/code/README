@@ -1,0 +1,17 @@
+README FILE:
+    This is the root folder of dSoftArk.
+    There are several branches that can be loaded here;
+        * trunk
+        * Alphaciv
+    Each project has it's own unique subfolder, that contains 3 documents:
+        * DevLog.txt
+            A log of how the development is going
+        * Requirements.txt
+            A list of requirements, the software has to furfill
+            As well as information on how far the work is.
+        * TestCases.txt
+            A list of the implemented testcases, found at:
+                ${branch}/test/hotciv/standard/Test${branch}.java
+        * DiscussionDoc.txt
+            A document for asking questions, and discussing,
+            is intended to be used async.

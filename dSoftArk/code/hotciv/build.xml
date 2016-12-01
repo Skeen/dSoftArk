@@ -1,0 +1,183 @@
+<!-- Build file HotCiv TDD start.
+
+   Adapted for the dSoftArk course.
+
+   This source code is from the book 
+     "Flexible, Reliable Software:
+       Using Patterns and Agile Development"
+     published 2010 by CRC Press.
+   Author: 
+     Henrik B Christensen 
+     Computer Science Department
+     Aarhus University
+
+   This source code is provided WITHOUT ANY WARRANTY either 
+   expressed or implied. You may study, use, modify, and 
+   distribute it for non-commercial purposes. For any 
+   commercial use, see http://www.baerbak.com/
+-->
+<project name="HotCiv" default="help" basedir=".">
+    <property name="source-directory" value="src"/>
+    <property name="test-source-directory" value="test"/>
+    <property name="lib-directory" value="lib"/>
+    <property name="configuration-directory" value="configuration"/>
+    <property name="documentation-directory" value="doc"/>
+
+    <property name="build.compiler.pedantic" value="true"/>
+    <property name="build-directory" value="build"/>
+    <property name="resourceDirectory" value="resource"/>
+
+    <property name="junitJar" value="${lib-directory}/junit-4.4.jar"/>
+    <property name="doxygenJar" value="${lib-directory}/ant_doxygen.jar"/>
+
+    <taskdef name="doxygen" classname="org.doxygen.tools.DoxygenTask"
+        classpath="${doxygenJar}" />
+
+    <path id="class-path">
+        <pathelement location="${build-directory}"/>
+        <pathelement location="${junitJar}"/>
+    </path>
+
+    <target name="help">
+        <echo>
+            HotCiv build management.
+            Targets:
+            build-src: Builds production code.
+            clean:     Removes all bytecode.
+            javadoc:   Generate JavaDoc (output in ${documentation-directory}/index.html)
+            doxygen:   Generate Doxygen Documationation (output in ${documentation-directory}/index.html)
+            handin:    Generate a Zip containing the code.
+
+            test:      Run JUnit test cases.
+        </echo>
+    </target>
+
+    <target name="handin">
+        <zip zipfile="CB.zip" update="true">
+            <fileset dir=".">
+                <include name="${source-directory}/**"/>
+                <include name="${test-source-directory}/**"/>
+                <include name="${lib-directory}/**"/>
+                <include name="${configuration-directory}/**"/>
+                <include name="build.xml"/>
+            </fileset>
+        </zip>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build-directory}"/>
+    </target>
+
+    <target name="prepare">
+        <mkdir dir="${build-directory}"/>
+    </target>
+
+    <target name="build-src" depends="prepare">
+        <javac srcdir="${source-directory}"
+            destdir="${build-directory}"
+            debug="on" 
+            includeantruntime="no" 
+            >
+            <compilerarg value="-deprecation"/>
+            <classpath refid="class-path"/>
+        </javac>
+    </target>
+
+    <target name="build-test" depends="build-src">
+        <javac srcdir="${test-source-directory}"
+            destdir="${build-directory}"
+            debug = "on"
+            includeantruntime="no" 
+            >
+            <classpath refid="class-path"/>
+        </javac>
+    </target>
+
+    <target name="build-all" depends="build-src,build-test"/>
+
+    <target name="doxygen">
+        <doxygen configFilename="${configuration-directory}/doxygen.cfg"/>
+    </target>
+
+    <target name="javadoc">
+        <javadoc
+            source = "1.5"
+            packagenames="hotciv.*"
+            sourcepath="${source-directory}"
+            destdir="${documentation-directory}"
+            package="true"
+            doctitle="&lt;b&gt;HotCiv&lt;/b&gt;"
+            bottom="&lt;b&gt;Skeleton code authored by Henrik B. Christensen &lt;/b&gt;"
+            windowtitle="HotCiv" >
+            <sourcepath> 
+                <pathelement path="${source-directory}"/> 
+            </sourcepath>
+            <classpath> 
+                <path refid="class-path"/> 
+            </classpath>
+        </javadoc>
+    </target>
+
+    <!-- JUnit testing -->    
+    <target name="test"  depends="test-alphaciv,
+                                   test-betaciv,test-gammaciv, test-deltaciv,
+                                   test-etaciv, test-zetaciv, test-epsilonciv,
+                                   test-semiciv">
+    </target>
+
+    <target name="test-alphaciv"  depends="build-all">
+        <java classname="hotciv.tools.FilterTestRunner"> 
+            <arg value="hotciv.variants.alphaciv.TestAlphaCiv"/>
+            <classpath refid="class-path"/>
+        </java>
+    </target>
+
+    <target name="test-betaciv"  depends="build-all">
+        <java classname="hotciv.tools.FilterTestRunner"> 
+            <arg value="hotciv.variants.betaciv.TestBetaCiv"/>
+            <classpath refid="class-path"/>
+        </java>
+    </target>
+
+    <target name="test-gammaciv"  depends="build-all">
+        <java classname="hotciv.tools.FilterTestRunner"> 
+            <arg value="hotciv.variants.gammaciv.TestGammaCiv"/>
+            <classpath refid="class-path"/>
+        </java>
+    </target>
+
+    <target name="test-deltaciv"  depends="build-all">
+        <java classname="hotciv.tools.FilterTestRunner"> 
+            <arg value="hotciv.variants.deltaciv.TestDeltaCiv"/>
+            <classpath refid="class-path"/>
+        </java>
+    </target>
+    <target name="test-epsilonciv"  depends="build-all">
+        <java classname="hotciv.tools.FilterTestRunner"> 
+            <arg value="hotciv.variants.epsilonciv.TestEpsilonCiv"/>
+            <classpath refid="class-path"/>
+        </java>
+    </target>
+
+    <target name="test-etaciv"  depends="build-all">
+        <java classname="hotciv.tools.FilterTestRunner"> 
+            <arg value="hotciv.variants.etaciv.TestEtaCiv"/>
+            <classpath refid="class-path"/>
+        </java>
+    </target>
+    
+    <target name="test-zetaciv"  depends="build-all">
+        <java classname="hotciv.tools.FilterTestRunner"> 
+            <arg value="hotciv.variants.zetaciv.TestZetaCiv"/>
+            <classpath refid="class-path"/>
+        </java>
+    </target>
+
+    <target name="test-semiciv"  depends="build-all">
+        <java classname="hotciv.tools.FilterTestRunner"> 
+            <arg value="hotciv.variants.zetaciv.TestSemiCiv"/>
+            <classpath refid="class-path"/>
+        </java>
+    </target>
+    
+</project>

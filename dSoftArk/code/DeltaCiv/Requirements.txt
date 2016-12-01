@@ -1,0 +1,8 @@
+deltaciv
+
+Varied world layouts 
+ Red city at (8,12)
+ Blue city at (4,5)
+ Easy to make new worldgen algorithms
+ Nothing else specified.
+

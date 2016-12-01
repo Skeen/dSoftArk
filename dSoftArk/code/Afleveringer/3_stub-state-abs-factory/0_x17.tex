@@ -1,0 +1,14 @@
+We have delegated the responsibility of specifying which strategies a game should be constructed with to an abstract factory: StrategyFactory.
+
+An earlier version of the same class was named StrategyPackage, as it was build without the concept of Abstract Factory in mind.
+
+Of course the name StrategyFactory is more appropriate now.
+\\
+
+Our experiments with abstract factory are mainly good. 
+
+We have build upon the concept and specified a DefaultStrategyFactory, which all other StrategyFactories extends, so that we only need to specify the new strategies new variants introduce.
+
+This is really nice, because the last few variants has only specified small changes to the alphaciv variant (and alphaciv is the default).
+This means every new StrategyFactory can be kept small and easily readable.
+

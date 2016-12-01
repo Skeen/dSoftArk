@@ -1,0 +1,16 @@
+EpsilionCiv
+
+* Winner.
+    The winner is the first player to win three attacks. Successful defenses do
+    not count, only successful attacks.
+    (the game is basically a best out of 5 battles, which can be resolved as soon as one player has won 3 battles).
+
+* Attacking.
+    Attacks are resolved based upon an algorithm that determins the battle
+    outcome based on combined attack strength of the attacking unit and combined
+    defense strength of the defending unit.
+    The combined strength is calculated based upon
+         A) the unit's own strength, 
+         B) support from adjacent friendly units,
+         C) terrain factor.
+    36.4.1 for more info!

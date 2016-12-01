@@ -1,0 +1,50 @@
+Open Questions:
+    1. Question:
+        Should we drop the requirements list, and instead make use of the ticket
+        tracker at " http://10.11.81.183:8080/2011Q2/dSoftArk/tktnew "?
+    1. Discussion:
+        Sverre: I think tickets sound fancy, so im all for it!
+                Seriously though, I think it is easier to maintain a single file
+                because of the rapid development of our TDD-process.
+                Also I do not understand the need of the requirements list. I 
+                mean, do we not have an alternative to the test list? That is,
+                do we need the in depth text descriptions of the specifications?
+                Maybe the answer is to choose a middleground between the short
+                (hackery?) test-list and the more describtive (messy?) req's-list.
+        Sverre: I got to think: maybe we could utilise the specifications and
+                make a ticket for each focus area (units, movement, production, etc.)
+                and have a relevant test-list for each of these focus-areas
+                (which could be linked with the ticket).
+                However I don't like splitting up the test-list, so maybe just use
+                anchor links to divide a single test-list in relevant sections, so
+                that each focus area ticket links to the same test-list.
+    2. Question:
+        Why is step 6 removed? - It's provided on the slides, as checking that
+        the refactoring is working, and if it doesn't one has to go back to
+        refactoring?
+       Answer:
+        Sorry, I just thouht this step was implicily meant (and btw not mentioned
+        in the book).
+        You are free to use it as you like, however I still think it is not 
+        strictly necessary. 
+
+
+Issues:
+    I've just noticed, that there's a reason why the slides does the checks
+    'inverted', the last valued handed to the assertions, is the expected,
+    otherwise output of JUnit may become wrong, for instance:
+    "expected:<[archer]> but was:<[legion]>", where's it should be:
+    "expected:<[legion]> but was:<[archer]>", there's an issue in turning these
+    around, we should do a general check, to enforce the correct scheme, which
+    is:
+        assert(message, expected, gotten)
+
+Answered Questions:
+    1:
+        Question:
+            Should Tiles be immutable.
+        Answer:
+            They should be immutable, as far as position and type goes,
+            however according to the UML diagram, they should be able to
+            contain cities and units, so they'll only be partly immutable.
+

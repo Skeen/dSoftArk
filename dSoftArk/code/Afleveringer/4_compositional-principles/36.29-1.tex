@@ -1,0 +1,21 @@
+Game is the facade to our hotciv subsystem, accessed by the client/user interface.
+
+\subsubsection*{Benefits:}
+\begin{itemize} \itemsep1pt \parskip0pt \parsep0pt
+\item It shields the user interface from the subsystem classes, 
+and thereby the specifics of the different variants and resources in the package.
+\item The relation between game and the client is weakly coupled. This means that we can develop the game subsystem without affecting the client. We just need to keep the well-defined facade interface.
+\item Any client interface may use any variant of the game subsystem, as relevant for the application.
+\end{itemize}
+\subsubsection*{Liabilities:}
+\begin{itemize} \itemsep1pt \parskip0pt \parsep0pt
+\item The facade needs to be a well defined interface, or there is a danger of the facade interface being bloated.
+\item Clients can still access classes in the subsystem. Usage of readonly interfaces is advised.
+\end{itemize}
+
+\begin{comment}
+The Game interface is then a model containing the game state, however do not notify the view, ui, when the game-state changes.
+
+Its an adapter because it converts the interfaces of gameImpl into an interface the clients expects (the client being the ui or the customer specs).
+(only gameImpl implements the adapter, so actually already conforms with client)
+\end{comment}

@@ -1,0 +1,94 @@
+How to read this file:
+Lines prepended with >> and appended with << describes the focus of the TDD
+iteration.  Other lines are numbered depending on which step in the TDD is
+occuring.
+These are the steps:
+    1. new test. Each TDD iteration starts with testing
+    2. the test fails and why.
+    3. The action taken in the attempt to make the test succeed. This step may
+mention principles used to add to the code. This step is followed by either 2
+or 4.
+    4. The test succeds. This step may describe the circumstances.
+    5. Refactor. Not all iterations utilises this step, because it is not
+allways obvious what to refactor.
+
+
+Our TDD iterations:
+5. Refactor code, such that unit strategies can be implemented, and ensure that
+alpha and beta -civ isn't broken.
+6. none of the old civs are broken, and there's now a unit strategy pattern in
+place.
+5. refactoring code, to move the unit actions to the units.
+    This requires us to make a strategy that runs inside of units, which require
+    changes to game, and unit creation, such that units are created, not by some
+    sting, but by a strategy instead, that returns this string on call
+    getTypeString()
+    Let's start off by making all the old code work, with the new design
+    (strategy units), and once that is done let's reimplement the unit actions.
+    To achieve the same unit functionality as before the change, add some
+    AlphaUnits; AlphaSettler, AlphaArcher, AlphaLegion. 
+6. All old tests pass
+
+>> settlersActionShouldRemoveTheSettler <<
+1. write a test that executes the settler's action, and checks that the settler
+is indeed gone, when it has been executed.
+2. fails, the settler is still there.
+3. added a new unit (GammaSettler) and use this one instead of the AlphaSettler.
+The GammaSettler implements a unitAction, exactly, that it deletes itself when called.
+4. succes
+
+>> settlersActionShouldAddACityBelowTheSettler <<
+1. write a test, that checks if a city is spawned after the settler's action.
+2. fails, no city was spawned!
+3. extend GammaSettler, such that the strategy, spawns a city when it's action
+is performed.
+4. succes
+
+>> citySpawnedBySettlersActionShouldHaveSameOwnerAsSettler <<
+1. write a test, that the city above was is actually our color.
+2. fails, the city was null.
+3. change, such that it owned by getPlayerInTurn() instead (notice, one really
+        could fake it here, and return red, but that would require us to make
+        another test, where we start out by placing a blue settler, and then
+        confirming that it is actually blue, but we'll choose not to do so).
+4. succes
+
+>> onlyPlayerInTurnShouldBeAbleToExecuteUnitAction << 
+1. write a test, where blue attempt to build with red's settler, and ensure that
+no city is produced.
+2. fails, a city is spawned.
+3. made a check to whether the unit is ours, before the unitstrategies are
+called.
+4. succes
+5. refactor testcode, such that shared tests, are in helper functions()
+
+>> archersActionShouldDoubleDefensiveStrength <<
+1. write a test, that checks the archers defensive strength, and ensure that it
+has doubled after a call to unitAction().
+2. fails, the archer doesn't double it's defensive strength.
+3. Develop a gamma archer, that behaves exactly as the AlphaArcher, and ensure
+nothing is broke, by using this.
+4. fails, but only on the same test.
+3. Now make GammaArcher doubles it's defensive strength, when UnitAction is called on it.
+4. succes
+5. break out an abstract class to contain the common code for units.
+
+>> archersActionShouldBeToggleAbleAndSoShouldTheDefensiveStrengthBuff <<
+1. write a test that checks the archers defensive strength, and ensure it's
+doubled after a call to unitAction() and then call unitAction() again, and
+ensure that it's back to it's original value.
+2. fails, after the second call, it's simply doubled again.
+3. change the GammaArcher, such that it has a boolean that determins whether
+it's ability is active or not, and double it's defensive strength, if it is
+active, half it if not.
+4. succes
+5. refactor testcases, such that code duplication between the last two tests,
+    are thrown into helper functions.
+
+>> archersActionShouldMakeItImmovable <<
+1. write a test that, checks if the unit can be moved, after the action has been
+set active.
+2. fails, we can still move the unit
+3. change the GammaArcher, such that when fotify is active, it returns 0 as
+movement left, and when not active, uses the abstract classes behavier.
+4. succes

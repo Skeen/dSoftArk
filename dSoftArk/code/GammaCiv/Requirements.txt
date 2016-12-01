@@ -1,0 +1,8 @@
+GammaCiv
+
+* Settler Action, removes settler
+   and adds a city at that tile for the same player.
+
+* Archer Action, fortify, Doubles defensive strength,
+   cannot be moved while fortified.
+   Action while fortified removes the fortification

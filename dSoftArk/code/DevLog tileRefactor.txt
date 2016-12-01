@@ -1,0 +1,11 @@
+-------------------------------
+--Rasmus Tilelist refactoring--
+-------------------------------
+
+Changing Arraylist with tiles to double array of tiles.
+createMap in WorldGenStrategy now returns double arrays.
+ changed AlphaWorld and DeltaWorld to return and work with double arrays.
+
+getTileAt() changed to lookup in double array rather than loop over an arraylist.
+All foreach loops over all tiles seaching for cities moved into getCityTiles, which returns a list of tiles that have cities.
+All foreach loops over all tiles searching for units moved into getUnits, which returns a list of all units in the game.

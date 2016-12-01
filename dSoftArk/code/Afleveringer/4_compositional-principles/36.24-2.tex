@@ -1,0 +1,31 @@
+The main issue of using multiple inheritance to implement the semiciv variant,
+is that we'll experience, what is known as 'the diamond problem' that is, the
+inheritance UML diagram forms a diamond, and as such, the semiciv would have
+multiple copies of it's super.super class, this is an issue, because we'll have
+to keep all of these objects in sync.
+Beside of this issue is also the issue of which super's function to call, an
+issue that can be resolved in several ways.
+In C++ this is handled with what's called virtual inheritance.
+
+However generally this is just a way to avoid an issue, that one really
+shouldn't get into, as the need for the UML diamond is a desperate warning of a
+possibly bad design. 
+
+But the benefits of this, compared to the approach we decided to use when we
+implemented our semiciv design, is that in our design there's actually some
+duplicate code, and as such, if there's a change to the way that betaciv loads
+it's strategies, we'll have to update our semiciv strategy accordingly.
+Whereas in the inheritance approach, it is automatically updated to reflect this change.
+
+Do note however that some languages (for instance lua), can handle this multiple
+inheritance in a somewhat prettier way, using a multiple inheritance control
+function, which is basically a function that determins how the multiple
+inheritance should be performed.
+That is if there should be multiple super-super classes, or if there should be
+a shared one, or even a hybrid wheres some super classes share super-supers in
+groups.
+With this function you can also decide which functions are to be overloaded,
+that is which ones are obtainable and which one is the default. 
+However this is mainly possibly because Lua is a dynamically typed language, and
+because you implement inheritance youself in Lua using the metatable.
+Hence you have full control as to how.

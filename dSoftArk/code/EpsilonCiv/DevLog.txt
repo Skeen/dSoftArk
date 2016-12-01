@@ -1,0 +1,131 @@
+How to read this file:
+Lines prepended with >> and appended with << describes the focus
+of the TDD iteration.  Other lines are numbered depending on
+which step in the TDD is occuring.
+These are the steps:
+    1. new test. Each TDD iteration starts with testing
+    2. the test fails and why.
+    3. The action taken in the attempt to make the test succeed.
+       This step may mention principles used to add to the code.
+       This step is followed by either 2 or 4.
+    4. The test succeds. This step may describe the circumstances.
+    5. Refactor. Not all iterations utilises this step, because
+       it is not allways obvious what to refactor.
+
+
+Our TDD iterations, continued from Multiciv:
+
+>> getWinner - return null at game start <<
+1.  add TestEpsilonCiv, variant.EpsilonCivStrategies
+    Write test to assert no winner at game start.
+4.  Succes.
+
+>> There is no winner before a battle has happened <<
+1.  Testing that getWinner returns null before a call to resolveBattleWinner, that is 
+    To write this test I must first refactor my code:
+5.  Refactoring.
+    Introduced a helper method GameImpl.resolveBattleWinner to decide the winning unit of a battle.
+    Changed the variable unitFrom in case of battle.
+    Changed the checks on city-ownership to match the battle winner in-stead of the current player for the round.
+6.  Succes
+5.  Moved resolveBattleWinner into a strategy, to allow a testcase to specify a new one.
+    Let the defaultCivStrategies hold this original version.
+6.  Succes
+1.  Now write an extended defaultBattleStrategy which changes a boolean in case of call to resolveBattle.
+4.  The local paramter is passed on and is rightly false (at game start)
+
+>> If A Battles resolves in favor of Red, then the winner is either null or Red
+1. I have to refactor my test code, so that i test both the boolean and the owner.
+    The test of either Red or Null was made succesfully using a try catch block
+4.  Succes   
+>> If A Battles resolves in favor of Blue, then the winner is either null or Red
+1.  really small change to the code. Renaming the testing method.
+4. Succes
+5. Moved Test member classes outside TestEpsilonCiv file, into its own.
+   Refactored into new files...
+6.
+
+>> Red unit exists at (5,5) and blue at (5,6) <<
+1.  test case simple, just use getUnitAt() and getOwner().
+2.  No unit at 5,5.
+3.  Let me place a standard unit there.
+    Created Epsilon "Battlefield" World (extended default)
+    and added units.
+4.  Succes, 
+
+>> Test unit at (5,5) has attack strength 10 and defensivestrength 10 <<
+1.  Wrote test to acces attack strength and def.strength of unit at 5,5.
+    and assert values to be 10.
+2.  The returned value -1 is not the right value.
+3.  Faking it, by changing the -1 to 10.
+4.  Succes, but wondering if it really should be that all units have value 10
+    and is it a proper name: NoStrengthUnit to have these values.
+    ...
+>> Test unit at (5,6) has attack strength 10 and defensivestrength 10 <<
+1.  Added the same test as before just for unit at 5_6.
+4.  Succes (all new units have this value.)
+
+>>  Test outcome of Battle between the 2 units <<
+1.  Write test that makes the 2 units battle eachother and getWinner should
+    still return null.
+4.  Succes.
+
+>> Test outcome of 2 battles <<
+1.  change the gameWorld to initialize with 2 more units at 6_5 and 6_6
+4.  Succes
+5.  Refactor testcases merges.
+6.  Succes.
+
+5.  Refactored the folder structure, and renamed some files.
+    Also reverted the setting of unitStrength away from NoStrengthUnit into
+    a decorator in the test-folder and setup unitconstruction to use the
+    decorator.
+6.  succes.
+
+
+>> Test that getWinner changes from null to a valid player after 3-5 different battles <<
+1   Adding battlable units to testWorld.
+    Used existing tests as base on the new test.
+2.  Failure, null returned as game winner.
+3.  Wrote new epsilon-specific winner-strategy, to return a Red player, all the time.
+2.  3 Failures, No winner expected before 3 battles.
+3.  Added an int field value in Player with a public getter and incrementer.
+    Rewrote the WinStrategy to read the player data and return the player based     on the data.
+2.  1. Failure, Figured out that code had been removed by a merge from
+    multiciv.
+3.  Retraced the code.
+4.  Succes 
+
+>> Test winner is Blue after expected outcome of battle between 40strengthunit and -1strengthUnit.
+1.  Implement more units in the testworld, where we are certain of the output.
+    ie. Blue units with strengths 40 against normal -1 strengths Red Settlers.
+2.  Failed, because the static enums were not reset in a new game. So the calculations were the same in all tests.
+3   Moved registerBattleWinner and getNumberOfBattlesWon to Game.
+5   Refactored the parameters to registerBattleWinner.
+6   Succes
+
+>> Test text Book legion at 15,15 has att str 18 <<
+1.  Rewrote placement of units and cities to match with text book case.
+    Wrote test to check att strength eq 18.
+2.  Failure, returned 10. 
+
+5. Refactor registerBattleWinner and getNumberOfBattlesWon to a strategy.
+    Let the WinStrategy and the BattleStrategy be the same in epsilonciv.
+2. lots Failures: Blue win after 3 battles.
+3.  Corrected missing +1 in registerBattleWon
+2.  The old failure
+3. New EpsilonUnitFactory using EpsilonUnitStrengthStrategy, which
+    faked, returns 18 on getAttackingStrength.
+4.  Succes, (but faked)
+
+>> legion with att strength 18 in city with 1 adjacent friend << 
+1. Added super strong 40 strengths unit in gameworld.
+    Added attack on other unit, win and remove other unit, so only
+    one remaining friend to legion at 15,15
+2. Failure, returned faked value 18, still
+3. Triangulate faked code away.    
+    Added parameters to UnitStrengthStrategy.getAttackingStrength to take a tile and a game (state dependent behavior).
+    Implemented getNumberOfAdjacentFriendlies.
+4.  Succes (however still faked tile-type string)
+5.  cleaned a little bit in EpsilonUnitStrengthStrategy.
+6.  Succes.

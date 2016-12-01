@@ -1,0 +1,55 @@
+How to read this file:
+Lines prepended with >> and appended with << describes the focus
+of the TDD iteration.  Other lines are numbered depending on
+which step in the TDD is occuring.
+These are the steps:
+    1. new test. Each TDD iteration starts with testing
+    2. the test fails and why.
+    3. The action taken in the attempt to make the test succeed.
+       This step may mention principles used to add to the code.
+       This step is followed by either 2 or 4.
+    4. The test succeds. This step may describe the circumstances.
+    5. Refactor. Not all iterations utilises this step, because
+       it is not allways obvious what to refactor.
+
+
+Our TDD iterations:
+See the Devlog in the ../AlphaCiv/Devlog for earlier development.
+
+>> Change the gameseed of WinStrategy to only use a limited
+   interface of Game <<
+5. Winning strategies currently need acces of Game.getAge,
+   game.getCityAt and City.getOwner. So These were pulled into new
+   superInterfaces so now named:
+   GameAsSeen.getCityAt, GameAsSeen.getAge and
+   CityAsSeen.getOwner.
+   I hope this makes it clear that these are interfaces
+   responsible for watching the state of Game and City that is
+   relevant for the WinStrategies.
+6. Succesfully refactorised.
+
+>> Change the gameseed of WinStrategy to only use a limited
+   interface of Game
+   Change constructor of GameImpl to only take a single
+   parameter: a GameStrategy, with the following methods:
+    WinStrategy winningStrategy()
+    AgeStrategy agingStrategy()
+    WorldGenStrategy relevantStrategy()
+<<
+5. Constructed interface StrategyPackage with a getter method for
+   each of the strategy-parameters in the constructor of GameImpl.
+   Created an StrategyPackage implementation to handle
+   Alphaciv-strategies.
+   Likewise implemented StrategyPackages for each of the other
+   Variants.
+6. Succes: Green Bar on all tests.
+
+#############################
+
+5. A lot of refactoring has happened:
+   *Implementation of defaultStrategies, which is just AlphaCivs Strategies
+    moved and renamed. The remaining alphaCivStrategies are just extenden 
+    from this defaultCiv.
+    Other variants are changed to use this default to.
+   *Restructure of Interfaces into 2 variants: superinterface with only accessors, and the subinterfaces with all mutators (Modifiables), and returntype of accessors as modifiables also.
+   * Further which I have forgotten.

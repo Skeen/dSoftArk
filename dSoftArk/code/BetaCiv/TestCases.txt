@@ -1,0 +1,13 @@
+﻿Test cases BetaCiv
+
+World aging:
+v	* 4000 BC -> 100  BC = 100 year/round
+v   * "Around the birth of Christ" Sequene -100, -1,  +1, +50
+v   * 50   AD -> 1750 AD = 50  year/round
+v	* 1750 AD -> 1900 AD = 25  year/round
+v	* 1900 AD -> 1970 AD = 5   year/round
+v   * 1970++             = 1   year/round
+
+Others:
+v   * First player to conqour all cities wins.
+

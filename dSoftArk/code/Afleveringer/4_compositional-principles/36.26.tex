@@ -1,0 +1,17 @@
+Our design is very much made with responsibility in mind. \\
+ The Game interface is responsible for gamelogic. \\
+ World is responsible for gameworld consistency, maintainance and
+modification.\\
+The implementation of Game, GameImpl, delegates some of it's responsibilities
+in strategies such as determining winners of battles, the aging and winning of
+the game or/and worldGeneration.
+
+GameImpl additionally takes the role of initializing the game and all related components.
+It supplies all the needed strategies to where these are used and needed. \\
+ 
+To accomplish these responsibilites and roles, there are protocols in place
+between game and world.\\
+ GameImpl expects to recieve all the needed strategies through a Factory
+pattern.\\
+ WorldImp expects all modifications to the gameworld to be done through its
+methods and expects to recieve a world gen strategy from Game.

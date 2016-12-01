@@ -1,0 +1,41 @@
+﻿
+BetaCiv
+
+* First player to conqour all cities wins.
+
+* World Aging, implement aging as specified in book.
+
+	4000 BC -> 100  BC = 100 year/round
+	"Around the birth of Christ" Sequene -100, -1,  +1, +50
+	50   AD -> 1750 AD = 50  year/round
+	1750 AD -> 1900 AD = 25  year/round
+	1900 AD -> 1970 AD = 5   year/round
+    1970++             = 1   year/round
+
+GammaCiv
+
+* Settler Action, removes settler
+   and adds a city at that tile for the same player.
+
+* Archer Action, fortify, Doubles defensive strength,
+   cannot be moved while fortified.
+   Action while fortified removes the fortification
+
+
+DeltaCiv
+
+* Varied world layouts.
+   Red city at (8,12)
+   Blue city at (4,5)
+   Easy to make new worldgen algorithms
+   Nothing else specified.
+
+Ex. 36.11
+
+
+
+1) Count the number of relations between instances of Unit and other Abstractions in your design for the two solutions.
+
+2) How and in which abstraction is the "destroy settler unit" responsibility handled in the two solutions?
+
+3) How and in which abstraction is the "create city at position" responsibility handled in the two solutions?

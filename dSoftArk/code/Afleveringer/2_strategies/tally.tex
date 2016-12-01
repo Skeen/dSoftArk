@@ -1,0 +1,94 @@
+\title{\huge dSoftArk \\
+       \small Afleveringsopgave - uge 2 genaflevering - MultiCiv}
+\author{Hold: DA4; Gruppe: B\\ \\
+        \href{mailto:skeen@cs.au.dk}{Emil Madsen - 20105376}\\
+        \href{mailto:emray@cs.au.dk}{Rasmus - 20105109}\\
+        \href{mailto:sverre@cs.au.dk}{Sverre - 20083549}
+       }
+\date{\today}
+
+\maketitle
+
+\hrule
+
+\section*{ Changes since the intial handin }
+In our original handin we didn't not have a solution to exercise 36.11.
+We do not have a solution this week either, as the exercise was discussed in class. 
+However a new UML diagram reflection our changes has taken the place of the old world and is found in the last section of this document.
+
+As for the misunderstanding of the Strategy Pattern, we must admit that we did
+not misunderstand the strategy pattern, but chose to use inheritance
+instead, simply because it seemed a better design at the time.
+The class review of exercise 36.11 changed our minds about that, however, and in this new handin we've changed the design to something more 'strategeekish'.
+
+We've effectively created 3 interfaces:
+one for unit actions, 
+one for unit movement 
+and 
+one for unit attacks. 
+
+These are obviously implemented as strategy patterns, as reflected by our UML diagram. 
+And as such there is only 4 strategies implemented for all of our units (3 defaults and a gammasettler (build city) strategy). 
+
+Beside this, we chose to go with a decorator pattern for the gamma archer, simply because all it does is change the behavior of some underlaying strategy. 
+
+We decided to go with this strategy pattern implementation instead of a more faking hardcode-it implemenation, simply because we wanted to keep our code flexiable and keep GameImpl clear of variant specific code.
+
+We've also decided to keep our unit actions on the units, as we found that to be the most intuitive and flexible solution,
+We see it in the way that "Units perform the action", not "The game perform an action with a unit".
+
+Please do note that we've removed the UnitStrategy interface, and replaced it
+with the 3 previously mentioned ones. where most of these have been implemented with the default.
+
+And we made sure to implement it more strategy patternish, instead of inheritanceish. 
+Also Unit abstractions is gone, as the entire earlier Unit Class System is gone.
+\\
+
+As mentioned in our feedback in class, we choose to get rid of all our *Ext interfaces, but to keep the isolation level we wanted, we have decided to split our
+interfaces into readonly, and modifyable interfaces, such that mutators on Unit/Tile, ect. only are accessible by those who need the modifiable interface.
+Fx not the gui, as that will have to operate using game (non modifiable) interface.
+\\
+
+We've also renamed our StrategyPack's to StrategyFactories, as that's what they
+really are.
+
+As for rewriting our testcases, we've decided not to do so, for the current
+code, but instead to apply the feedback, for the upcoming iterations. 
+
+This is simply to save time and is a matter of prioritising the items on our backlog higher.
+
+
+The TestHelper.runOneRound() method, was changed, to run until a player in
+turn, gets the turn again, such that it still works for x players, however
+without relying on the age, and now it does actually run a complete round,
+instead of just running till roundstart. - As one would expect.
+
+
+As for the implementation of deltaciv:
+We didn't notice the issue, and this has been fixed, such that worlds are now dynamically loaded based upon a string (As given with the provided example code).
+
+    
+As for the inheritance between our factories:
+We've decided to keep that, but rename Alphaciv into a defaultciv, that holds the common default behavier between the different variants. 
+As such, we've decided to go with some limited inheritance, such that we simply overload the strategies we want to specify, and unspecified defaults to alphaciv.
+This is by design, to remove the amount of code duplication.
+
+
+As a last note:
+We've choosen to move all our GameConstants, into GameConstants,
+   for instance ARCHER\_ATTACK and such.
+However these values are not used
+   anywhere, as the requirements does not state that the GammaArcher should
+   have a positive attack rating.
+It just states that it should double it's attack rating.
+
+\section*{
+A short outline of the TDD refactoring iteration that refactors your AlphaCiv variant into a design that will support the BetaCiv requirement (not the actual BetaCiv feature adding iteration!) }
+\input{ 1_betacivDev.tex }
+\section*{ A short outline of the variability points you have identified for Beta-, Gamma-, and DeltaCiv. }
+\input{ 2_variabilityPoints.tex }
+\subsection*{ 3-1-2 process for one of the variants. For one of them, discuss the use of the 3-1-2 process and the Strategy pattern. }
+\input { 2b_312.tex }
+\section*{ An UML class diagram outlining the final compositional design including all variants.}
+\input{ 3_uml.tex }
+

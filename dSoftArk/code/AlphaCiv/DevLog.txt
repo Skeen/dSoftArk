@@ -1,0 +1,560 @@
+How to read this file:
+Lines prepended with >> and appended with << describes the focus of the TDD
+iteration.  Other lines are numbered depending on which step in the TDD is
+occuring.
+These are the steps:
+    1. new test. Each TDD iteration starts with testing
+    2. the test fails and why.
+    3. The action taken in the attempt to make the test succeed. This step may
+mention principles used to add to the code. This step is followed by either 2
+or 4.
+    4. The test succeds. This step may describe the circumstances.
+    5. Refactor. Not all iterations utilises this step, because it is not
+allways obvious what to refactor.
+
+
+Our TDD iterations:
+
+>> Removed orginial testcase <<
+
+>> shouldHaveCityAt1_1 <<
+1. Check for city at Position(1,1)
+2. Fails, because Game.getCityAt(p) returns null
+3. Change Game.getCityAt(p) body to { return new Object(); }
+4. Fails, because of casting (Object to City not valid)
+3. Implement City stub (return all default values)
+    and change Game.getCityAt(p) to { return new CityImpl(); }
+4. Completes test
+5. No need
+
+>> shouldHaveRedCityAt1_1 <<
+1. Check for red city atPosition(1,1)
+2. Fails, because City.getOwner() returns null
+3. Change CityImpl.getOwner() body to { return Player.RED; }
+4. Completes test
+5. No need
+
+>> firstPlayerIsTheREDPlayer <<
+1. Check that turn = red in a new game
+2. Fails, because Game.getPlayerInTurn() returns null
+3. Change Game.getPlayerInTurn() body to { return Player.RED; }
+4. Completes test
+5. No need
+
+>> shouldReturnValidTileOnGetTileAt0_0 << 
+1. Check if a tile is returned by Game.getTileAt() at Position(0,0)
+2. Fails, because Game.getTileAt() returns null
+3. Implement a Tile stub (return all default values)
+    and change Game.getTileAt() body to { return new TileImpl(); }
+4. Completes test
+5. No need
+
+>> shouldHaveOceanAtTile1_0 << 
+1. Check that there's a ocean tile at Position(1,0)
+2. Fails, because of a compile error.
+1. Fix the test, such that it compiles.
+2. Fails, because Tile.getTypeString() returns null
+3. Change Tile.getTypeString() body to { return GameConstants.OCEAN; }
+4. Completes test
+5. No need
+
+>> shouldHavePopulation1OfACity <<
+1. Check that City.getSize() == 1
+2. Fails, because City.getSize() returns 0
+3. Change City.getSize() body to { return 1; }
+4. Completes test
+5. No need
+
+>> Documentation was overseen, as a step in 5, and is worken though at this <<
+>> point, to ensure everything is documented, in javadocs style <<
+
+>> Recorder role overtaken by sverre <<
+
+>> shouldBLueTurnAfterRed<<
+1. check that after a turn changes, then The Player is BLUE
+2. Fails, because game.getPlayerInTurn() returns null.
+3. inplemented current player as a variable: playerInTurn
+   modified change turn to make the player Blue.
+4. Completes test
+5. no need
+
+>> should be red turn after blue <<
+1. check that after a turn changes twice, then The Player is RED
+2. Fails, because game.getPlayerInTurn() returns BLUE.
+3. modified change turn to make the player switch between players.
+4. Completes test
+5. no need
+
+>> PositionShouldAcceptColAndRowFromConstructor <<
+1. Check that new position(1,1) is at row 1 and at column 1
+2. Succesful
+
+>> check blue 
+1. Check for city at Position(4,1)
+   Checks that the owner (from getOwner) is the player BLUE.
+2. Fails, because getOwner returns Red player as owner
+3. Change CityIMPL to hold a position and decide the player based on position,
+so that it is BLUE on position 4_1 and else it is RED.  The stored position is
+initialized through the constructor
+2. Fails, because of compile error, because not a real implementation of the
+interface
+3. Reimplement the original constructor (to be parallel with the constructor
+taking a Position-parameter)
+4. succesful
+5. no need.
+
+>> Test game age starts at age -4000 <<
+1. check game.getAge returns -4000, asserting that the game starts at age -4000
+2. failure: because it returns 0,
+3. specify that getAge should return -4000, (fake it)
+4. succesful
+5 no need
+
+>> Should Advance 100 BC each round<<
+1. Check that the getAge returns a 100 larger variable after a round changes.
+2. Fails, because it does not change the variable
+3. Moved the age to a variable 'age', and made getAge be an accessor for this
+variable, and made endOfTurn change (when changing player from blue to red) the
+age variable with + 100. 
+4. succesful.
+5. REFACTORING: No duplicate code spotted on a run through of all the code,
+
+>> noWinnerAtStart <<
+1. check that calling Game.getWinner, should return null.
+4. succeds
+
+>> RedShoulWinAtAge3000BC
+1. tests that the player red wins when the age exceeds 3000., by changing turn
+20 times equivalent to 1000 years and checking who the winner is.
+2. Fails, returned null instead of Player.Red 
+3, implements 2 cases to getWinner, before -3000BC (returning null) and else
+returning playerRED.
+4  succesful
+
+>> Mountain at 2,2
+1. Tests that there is a mountain at position 2,2
+2. Fails, returns a tileImpl which is a ocean.
+3. Change tileImpl to take a position in constructor, and return a mountain if
+position is 2,2, ocean otherwise.
+4. successful
+
+>> tile at (3,3) returns position(3,3)
+1. Tests that tile returns a position that has the same row and column it was
+made with.
+2. Fails, null pointer exception
+3. Change to return position(3,2)
+4. Fail, not the right row
+3. change to return position(3,3)
+4. success
+
+>> tile at (3,2) returns position (3,2)
+1. Tests that the tile at (3,2) returns position(3,2)
+2. Fails, as it returns position(3,3)
+3. change to return position (3,2)
+4. Prev. test fails as it required (3,3)
+3. Change to return its position
+4. success
+
+>> Check that game has valid tiles at all 16x16 squares.
+1. Tests that all tiles returned are not null.
+4. success, as no tiles returned null
+
+>> All tiles returns valid positions
+1. Run for loops that checks every tile and checks if its position returned is
+correct.
+2. success
+
+>> Position (0,1) should be hills
+1. Tests that (0,1) returns a hill tile.
+2. fails, returned something other than hills.
+3. changed getTile to return hills with position 0,1
+4. success
+
+>> Position (1,1) should be plains.
+1. Tests that 1,1 returns plains.
+2. fails, returns something else.
+3. Changed getTile to return hills when position is 1,1
+4. success
+
+>> All tiles other than (2,2), (0,1), (1,0) are plains.
+1. Tests that all plains not specified otherwise are hills.
+2. FAILURE, Returned something else other than plains.
+3. Changed getTile to return plains by default when not otherwise specified.
+4. Success.
+5. Removed duplicate returns hills when 1,1.
+
+>> Unit at 3,2
+1. check that there is a Unit at position(3,2)
+2. Fails
+3. Made unitImpl class
+4. 
+
+>> Blue unit at 3.2
+1. check that the unit at position 3,2 is owned by BLUE
+2 Fails
+3. Fake it, lad UnitImpl.getOwner() returnere Player.BLUE
+4 Succes
+
+>> Legion type unit at 3.2
+1 check that the (valid) unit at 3.2 is of type Legion
+2 Fails, returns null instead of GameConstant.LEGION
+3 Fake it: Lad unitImpl.getTypeString returnere GameConstant.LEGION
+4 Succes
+
+>> Archer type unit at 2.0
+1 check that the (valid) unit at 3.2 is of type Archer
+2 Fails, 
+3 Add Position variable to UnitImpl and change getTypeString to return type
+based on the position variable (if-creep).
+2 FAILS 2 times:
+    nullpointerException: Should be legion at 3,2
+    nullpointerException: Should be archer at 2,0
+3 Change GameImpl: Add a position as a parameter to constructor calls of Unit.
+4 Succes
+5 Refactor: Let the constructors requiring 0 parameters in UnitImpl and also
+CityImpl set the variable position to a standard value.
+    This could also be done by changing every construction of (Unit|City)-Impl,
+but we chose this way, because of the principle: Change by Addition, not by
+Modification.
+
+
+>> valid red unit at 2.0
+1 checkk that the unit at position 2,0 is owned by red
+2 Fails
+3 change getOwner to return type based on the position variable (if-creep).
+4 succes
+5
+
+5 We need to refactor the code:
+    We want to make Tile hold variables: localCity and localUnit which holds
+either a null value or the specific units, as specified by the UML-diagram.
+    However we wait till we have implemented movement. 
+
+>> Valid red settler unit at 4,3 <<
+1 check that the unit at posiition 4,3 is owned by red and is a Settler
+2, Fails, because not a settler unit.
+3, Implements Settler as the unit of 4,3 in UnitImpl.getTypeString
+2 Fails, because not red Unit
+3 Implements Red as the returnvalue of getOwner in case of position 4,3
+4 succesful
+5 refactor: Change getOwner to check only on BLUE unit at 3,2 and default to
+RED.
+
+>> moveUnitShould from 4,3 to 5,3 should return true. <<
+1 check that valid unit at 4,3
+  assert true move unit through gameUnit.moveUnit to valid tile 4,3.
+2 fails
+3 fake it: always return true
+4 succes
+
+
+>> move unit from 3,2 to 2,2 should fail because of mountain <<
+1 check that moveUnit returns false
+2 fails, returns true
+3 implements test on the 'to'-position so returns false if at 2,2.
+4 succes
+
+>> move unit from 2,0 to 1,0 shuold fail because of ocean <<
+1. check that moveUnit returns false
+2. fails, returns true
+3. fakes it, such that one can never move to tile 1.0
+4. succes
+
+>> moveUnitShould from 4,3 to 5,3 should return a unit at 5,3. <<
+1. check that the unit is moved.
+2. sucess
+
+>> assert that there is no unit at 5,3 <<
+1. check that the getUnitAt() returns null
+2. fails, returns a unit
+3. fake it, check for the specific test position, and return null if that is
+it.
+4. an old test fails
+3. obviously there's a design flaw, and we'll have implement a simple array,
+that holds where units are located. - Lots of debugging, due to a simple void
+being inserted before the constructor name.
+4. only the old test fails
+3. fix the old case (movement), by now actually moving the unit, within the
+array.
+4. succes
+
+----------------
+--SKEEN STARTS--
+----------------
+
+>> assert that, there are no units anywhere except at 3,2 4,3 and 2,0. <<
+1. make a loop, that checks all fields except these ones are null
+4. succes
+
+>> assert that, the red player cannot move the blue player's units <<
+1. make a test that attempts to move the blue unit, and expects an error
+2. fails because we're actually able to move blue units.
+3. check that the 'from-unit' to move, is actually ours.
+4. succes
+
+>> assert that, the blue player connot move the red player's units <<
+1. make a test that attempts to move a red unit, when player 2 is active, and
+expect an error.
+4. succes, because our solution to the previous one, made use of
+playerInTurn(),
+    and therefore applied to blue too.
+
+>> assert that, a red unit is allowed to move on top of a blue unit <<
+1. write a test, that does exactly this, and ensure that the red unit is moved
+ontop.
+4. succes (somewhat atleast, stacks the two units in the same spot)
+
+>> assert that, once a unit is moved, it is actually moved from the old tile <<
+1. write a test, that checks that when a unit is moved, there is no longer a
+unit on the old tile.
+4. succes (because we're updating the coordinates on the unit).
+
+>> assert that, a red unit, that moves ontop of a blue unit, kills it <<
+1. write a test that moves a red unit ontop of a blue unit, then move the red
+   unit away again, and ensure that the blue unit is gone.
+2. fails, because we're not able to move back (because we're trying to move the
+   stacked blue unit)
+3. make a little change, such that the blue unit is destroyed, before we move
+   to the tile, where it is.
+2. fails, because the implementation of unit.getOwner() is faked, such that it
+   assumes that the unit in square 3.2 is always blue.
+3. make a little change, such that the owner of the unit, is not position
+   dependend, but instead set on construction (changed in game too).
+4. succes
+5. refactor to make deletion of units prettier.
+6. succes
+
+>> assert that, a blue unit, that is moved ontop of a red unit, kills it <<
+1. write at test, that moves a blue unit ontop of a red unit, and then move the
+blue unit away again, and ensure that the red unit is indeed gone.
+4. works out of the box, because it is essentially the same as the previous one.
+
+>> assert that, a red unit, cannot kill another red unit, by moving onto it <<
+1. write a test, wheres a red unit is trying to kill another red unit.
+2. fails, red units are allowed to teamkill!
+3. add a little check, that ensures that teamkilling, is not allowed!
+4. succes, not red units cannot teamkill.
+5. refactor, to make better use of the getUnitAt() function, comment and
+cleanup
+6. succes
+
+>> assert that, we're able to move to some tiles, while not able to move on
+other tiles. <<
+1. write a test, that checks whether we're able to move to a specific tile
+4. succes
+5. working due to a fake in the moveUnit(), which is to be refactored, from
+static hardcoding, into something dynamic, by using a tile array.
+4. succes
+5. refactor tiles, to hold their type, instead of it begin faked, by position.
+   construct all tiles as plains.
+2. fails, becouse we can move to all tiles
+3. Initialise these specific tiles, such that all is plains, except these.
+4. succes
+
+
+----------------
+--SVERRE STARTS--
+----------------
+5. Refactoring the position variable away from City-impl by introducing a owner
+variable and setting the owner on constuction. This is simpler for returning
+the owner and reduces the chance for if-creep.
+   Also changed test:shouldHavePopulation1fACity to construct a new city with
+Player.RED instead of a random position.
+   The if-else-statement is as such propagated up to GameImpl where it is used
+to construct the different cities in GetCityAt.
+4. Succes
+
+5. Refactoring the implementation of UnitImpl.getTypeString:
+   Introduced a variable: typeString, and let the variability be defined under
+construction, so expanded the constructor with the new variable.
+   The if-else-statement is as such pulled up to GameImpl where it is used to
+construct the different units in the constructor.
+4. succes.
+
+6. Ideas Not Implemented:
+    Removing private constructors. (removed means not used)
+    make Tile's variable Position final.
+    Implement tiles in GameImpl as a hashmap<Position><Tile> or better:array[][]
+    refactor change age out of GameImpl.endOfTurn
+    refactor getPosition out of UnitImpl
+
+----------------
+--SKEEN STARTS--
+----------------
+>> assert that, we're able to produce archers in a city. <<
+1. write a test, that checks whether we're able to produce archers.
+2. fails, because production returns null
+3. Make a little change that fakes the behavier.
+4. succes
+
+>> assert that, we're able to produce legions in a city. <<
+1. write a test, that checks whether we're able to produce legions.
+2. fails, because production returns archer
+3. Change the city to hold a string that represents it's production, and make a
+set function for it, also add this function to the interface.
+4. fails on old test, because archer production was not set
+3. changes the old test, to set Archer production
+4. succes
+5. comment on the interface change, add precondition that the supplied string
+should be a valid unit name.
+
+>> assert that, we're able to produce settlers in a city. << 
+1. write a test, that checks whether we're able to produce settlers.
+2. succes, due to the implementation of the previous test.
+
+>> assert that, we're producing legions by default in a city. (as in freeciv) << 
+1. write a test, that the default setting of a city, before setting it, and
+confirms that this is actually legions.
+2. fails, returns null
+3. changes such that it is set to legions, in the constructor.
+4. succes
+
+>> assert that, cities focus on production <<
+1. write a test, that checks the return from the focus function.
+2. fails, because the function returns null.
+3. change to fake it, by always returning productionFocus
+4. succes
+
+>> assert that, cities production amount starts at zero <<
+1. write at test, that checks that a cities production amount starts at zero
+(requires an interface change, but so be it).
+2. fails, because the new interface change is implemented as a dummy.
+3. change such that it always returns 0.
+4. succes
+5. Comment the interface change.
+
+>> assert that, cities are not found, unless they are expected to. <<
+1. write a test, that attempts to get a city at 2,2 (mountain), and asserts that
+none are gotten.
+2. got a city, due to some faking code
+3. changed to make use of a list and let cities have coordinates, alike units.
+4. succes
+
+>> assert that, cities produce 6 productions per round (fixed) <<
+1. write a test, that checks the intial, and then advance a round, and rechecks
+it, where it should have increased.
+2. fails, because the production did not increase (its faked as a static zero).
+3. make a variable that stores the amount of production, and intialise it to
+zero, and return it instead of zero. - Then add a setter to this variable, and
+update it from main, once a round has elapsed.
+4. succes
+5. make a specific function that is called on each round that has elapsed,
+    instead of the complicated code being inside endOfTurn().
+
+>> assert that, a unit is produced once a city has accumulated enough
+   productions for it to be produced. <<
+1. write a test, that checks whether a unit is spawned in the city after has
+accumulated enough resources for it.
+2. fails, simply because no unit is spawned.
+3. adds some code that builds units, when enough production is accumulated, and
+add it in game.
+4. succes
+
+>> assert that, a unit is placed on the city tile, if no other unit is there
+   already <<
+1. Already included in the previous test.
+2. succes
+
+>> assert that, the unit being produced once a city has accumulated enough
+   productions for it, is actually the unit, requested by the city. <<
+1. write a test, that for each kind of unit, checks that they are actually
+produced correctly.
+2. fails, because legions are always produced.
+3. changed the unit spawning code, to check what the city wants and to spawn
+that (still just spawning when 6 resources are present).
+4. succes
+
+>> assert that, once a unit is produced the cities treasury is reduced with the
+   proper amount. <<
+1. write a test, that asserts that the cities treasury is actually reduced after
+building a unit.
+2. fails, because the town doesn't pay at all yet.
+3. simply make the towns pay
+4. the test that checks that towns actually increase their production at a rate
+of 6, is now broken.
+3. change the code such that it takes into account what kind of unit is begin
+asked for, and if the unit being asked for is a settler, expect it to cost 20,
+such that this test works again.
+4. the previos test fails, because the settler is not built after two turns has
+elapsed.
+3. We'll just crank up the amount of turns, such that we're sure the unit has
+been built.
+4. succes
+
+>> assert that, once a settler is produced the cities treasury is reduced by 20 <<
+1. write a test alike the one above, just produce a settler instead.
+2. succes.
+
+>> assert that, once a unit is built, and there's no room for it in the city it
+   is build just north of the city. <<
+1. write a test, that builts two units, and ensure that theres a unit on the
+city as well as the tile just north of it.
+2. fails, there's only a unit at the city.
+3. changed the unit placement code, to check the city tile, and if taken, place
+the unit just north of the city.
+4. succes
+
+>> assert that, the settlers action doesn't do anything <<
+1. write a test that asks the settler to build, and ensure that no city is
+spawned.
+2. succes, as no code actually implements the action.
+
+--------------------
+--RASMUS REVISIONS--
+--------------------
+
+* Revised testcases list, removed duplicates.
+
+* Removed feature; production focus by default,
+	reason; not alphaciv spec.
+
+* Removed feature; produces LEGION by default,
+	reason; not alphaciv spec.
+
+* Removed test for verifying new units produced and costs of these
+    reason; Incorrectly implemented, wrong costs, wrong deductions from city
+production treasury.
+	
+* new test, check Archer, legion, settler production seperately and costs
+10/15/30
+
+>> Test that Archer is made on city, when city sets production to Archer and has
+accumulated 10 production. <<
+1. Write test case
+2. Test fails, prev. implementation flawed and does not pass.
+3. Revised unit production in endOfRound
+4. Success
+
+>> Test that Legion is made on city, when city sets production to Legion and has
+accumulated 15 production. <<
+1. Write test case
+2. Test fails, prev. implementation flawed and does not pass.
+3. Revised unit production in endOfRound
+4. Success
+
+>> Test that Settler is made on city, when city sets production to Archer and
+has accumulated 30 production. <<
+1. Write test case
+2. Test fails, prev. implementation flawed and does not pass.
+3. Revised unit production in endOfRound
+4. Success
+
+----------------
+--SKEEN STARTS--
+----------------
+>> Test that units are placed around a town, in a clockwise motion, starting by
+   going north. <<
+1. Write a test that test for instance the 9 first placements
+2. fails, units are 'stacked' at north, with the current code.
+3. added a segmentation algorithm, for finding the next free spot.
+4. succes
+
+-------------------------
+--RASMUS MAKES MOVEMENT--
+-------------------------
+
+>> Tests that Archer, legion, settler have 1 movement.
+1. Write a test that checks getMovementCount()
+2. fails
+3. Change getMovementCount to return 1, instead of -1.
+4. success

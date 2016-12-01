@@ -1,0 +1,7 @@
+Due to the fact that we're using a factory to produce our strategies, and
+because we've decided to keep our production code free of variant specific code,
+it does actually not require ANY changes to production code to support the
+semiciv variant.
+ All there's needed is to produce two classes, a strategy
+factory, and a unitfactory somewhat alike the gammaunit factory, but
+with specialized behavior for the settler.
